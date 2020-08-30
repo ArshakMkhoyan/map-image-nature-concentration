@@ -8,4 +8,6 @@ Input:
 
 Output:
 
+Nature Concentration: 0.504
+
 <img src="https://github.com/ArshakMkhoyan/map-image-nature-concentration/blob/master/test_images/output.jpg" width="250">
