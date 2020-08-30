@@ -37,13 +37,6 @@ def get_nature_concentration():
 
         nature_concentration_value, image_mask = match_image_by_color(image, blue_rgb, green_rgb)
 
-        print(image_mask.mean())
-        # plt.imshow(image_mask, cmap='gray')
-        # plt.savefig('DR.png')
-        # plt.show()
-        # im = Image.fromarray(image_mask)
-        # im.save('test_images/output.jpeg')
-        # cv2.imwrite('test_images/output.jpg', image_mask)
         return jsonify(nature_concentration_value=nature_concentration_value, image_mask=image_mask.tolist())
     else:
         return None
