@@ -4,8 +4,10 @@ concentration on the image, and masked image (matrix).
 # Example
 Input:
 
-<img src="https://media.wired.com/photos/5926db217034dc5f91becd6b/master/w_582,c_limit/so-logo-s.jpg" width="250">
+<img src="https://github.com/ArshakMkhoyan/map-image-nature-concentration/blob/master/test_images/green.jpeg" width="250">
 
 Output:
 
-<img src="https://media.wired.com/photos/5926db217034dc5f91becd6b/master/w_582,c_limit/so-logo-s.jpg" width="250">
+Nature Concentration: 0.504
+
+<img src="https://github.com/ArshakMkhoyan/map-image-nature-concentration/blob/master/test_images/output.jpg" width="250">
