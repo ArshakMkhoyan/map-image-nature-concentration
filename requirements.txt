@@ -4,4 +4,3 @@ opencv_python==3.4.5.20
 Flask==1.1.2
 requests==2.24.0
 matplotlib==3.2.2
-Pillow==7.2.0
