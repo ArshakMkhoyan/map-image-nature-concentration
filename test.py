@@ -24,8 +24,13 @@ def test(inp):
 # link = 'test_images/green.jpeg'
 # image_bytes = open(request.json['image'], 'rb').read()
 
-link = 'https://maps.googleapis.com/maps/api/staticmap?center=54.7829996,' \
-       '%209.4562149&zoom=8&size=640x400&maptype=roadmap&markers=color:red%7C54.7829996,' \
-       '%209.4562149&key=AIzaSyCf6NDAXlZ5E1PdqJrAqCqhxEOQ7vYhDWI'
-inp = {'image': link}
+# link = 'https://maps.googleapis.com/maps/api/staticmap?center=54.7829996,' \
+#        '%209.4562149&zoom=8&size=640x400&maptype=roadmap&markers=color:red%7C54.7829996,' \
+#        '%209.4562149&key=AIzaSyCf6NDAXlZ5E1PdqJrAqCqhxEOQ7vYhDWI'
+link_red = 'https://maps.googleapis.com/maps/api/staticmap?center=49.630672,' \
+           '%209.672367&zoom=6&size=1000x1000&maptype=roadmap&path=color:0xfe0000fe|fillcolor:0xfe0000fe|weight:1|85,' \
+           '180|85,90|85,0|85,-90|85,-180|0,-180|-85,-180|-85,-90|-85,-0|-85,90|-85,180|0,180|85,180|51.07788,' \
+           '4.19369|51.07788,15.151044|48.183464,15.151044|48.183464,4.19369|51.07788,' \
+           '4.19369&key=AIzaSyCf6NDAXlZ5E1PdqJrAqCqhxEOQ7vYhDWI '
+inp = {'image': link_red}
 test(inp)
