@@ -9,7 +9,9 @@ import matplotlib.pyplot as plt
 def test(inp):
     # files = {'file': open(inp, 'rb')}
     # response = requests.post('http://0.0.0.0:5000/nature_concentration', files=files)
-    response = requests.post('http://0.0.0.0:5000/nature_concentration', json=inp)
+    # server = 'http://172.31.32:5000'
+    server = 'http://0.0.0.0:5000'
+    response = requests.post(server + '/nature_concentration', json=inp)
     print(response.ok)
 
     response = response.json()
@@ -19,7 +21,7 @@ def test(inp):
     jpg_original = base64.b64decode(mask)
     image_grey = cv2.imdecode(np.frombuffer(jpg_original, np.uint8), -1)
     plt.imshow(image_grey)
-    plt.imsave('test_images/output_new.jpg', np.array(response['image_mask']), cmap='gray')
+    plt.imsave('test_images/output_new.jpg', image_grey, cmap='gray')
     plt.show()
 
 
