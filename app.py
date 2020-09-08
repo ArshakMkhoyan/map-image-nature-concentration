@@ -1,3 +1,5 @@
+import base64
+
 import requests
 from skimage.color import rgb2lab, deltaE_cie76
 from flask import Flask, request, jsonify
@@ -47,14 +49,20 @@ def get_nature_concentration():
         image_bgr = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), -1)
         image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
 
+        # Remove red borders
         binary = np.all(image_rgb == red_rgb, axis=-1)
         ru = get_coordinates_ru_corner(binary)
         ld = get_coordinates_ru_corner(binary[::-1, ::-1])
         image_rgb = image_rgb[ru[0]:-ld[0], ru[1]:-ld[0], :]
 
+        # Get image mask and nature concentration value
         nature_concentration_value, image_mask = match_image_by_color(image_rgb, blue_rgb, green_rgb)
 
-        return jsonify(nature_concentration_value=nature_concentration_value, image_mask=image_mask.tolist())
+        # Encode mask to base64
+        _, buffer = cv2.imencode('.jpg', image_mask)
+        jpg_as_text = base64.b64encode(buffer)
+
+        return jsonify(nature_concentration_value=nature_concentration_value, image_mask=jpg_as_text.decode("utf-8"))
     else:
         return {'nature_concentration_value': None, 'image_mask': None}
 

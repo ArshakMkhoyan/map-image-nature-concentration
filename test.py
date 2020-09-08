@@ -1,3 +1,5 @@
+import base64
+
 import cv2
 import requests
 import numpy as np
@@ -13,7 +15,10 @@ def test(inp):
     response = response.json()
     print(response['nature_concentration_value'])
 
-    plt.imshow(response['image_mask'])
+    mask = response['image_mask']
+    jpg_original = base64.b64decode(mask)
+    image_grey = cv2.imdecode(np.frombuffer(jpg_original, np.uint8), -1)
+    plt.imshow(image_grey)
     plt.imsave('test_images/output_new.jpg', np.array(response['image_mask']), cmap='gray')
     plt.show()
 
