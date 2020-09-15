@@ -20,6 +20,11 @@ def get_coordinates_ru_corner(img):
                 return [y, x]
 
 
+def get_mask(img):
+    r, g, b = img[:, :, 0], img[:, :, 1], img[:, :, 2]
+    return np.logical_or(r > 245, g < 10, b < 10)
+
+
 def match_image_by_color(image, blue_color, green_color, threshold=15):
     selected_image = rgb2lab(np.uint8(np.asarray([image])))
     blue_color = rgb2lab(np.uint8(np.asarray([[blue_color]])))
@@ -49,11 +54,14 @@ def get_nature_concentration():
         image_bgr = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), -1)
         image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
 
+        # Add red borders to make things easier
+        image_rgb = cv2.copyMakeBorder(image_rgb, 1, 1, 1, 1, cv2.BORDER_CONSTANT, value=red_rgb)
+
         # Remove red borders
-        binary = np.all(image_rgb == red_rgb, axis=-1)
+        binary = get_mask(image_rgb)
         ru = get_coordinates_ru_corner(binary)
         ld = get_coordinates_ru_corner(binary[::-1, ::-1])
-        image_rgb = image_rgb[ru[0]:-ld[0], ru[1]:-ld[0], :]
+        image_rgb = image_rgb[ru[0]:-ld[0], ru[1]:-ld[1], :]
 
         # Get image mask and nature concentration value
         nature_concentration_value, image_mask = match_image_by_color(image_rgb, blue_rgb, green_rgb)
@@ -61,6 +69,11 @@ def get_nature_concentration():
         # Encode mask to base64
         _, buffer = cv2.imencode('.jpg', image_mask)
         jpg_as_text = base64.b64encode(buffer)
+
+        # TMP. Get image encoded
+        # _, tmp = cv2.imencode('.jpg', image_rgb)
+        # tmp_as_text = base64.b64encode(tmp)
+        # TMP
 
         return jsonify(nature_concentration_value=nature_concentration_value, image_mask=jpg_as_text.decode("utf-8"))
     else:
