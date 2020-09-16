@@ -39,9 +39,8 @@ def match_image_by_color(image, blue_color, green_color, threshold=15):
     mask = mask.astype(np.uint8)
     kernel = np.ones((3, 1), np.uint8)
     mask = cv2.dilate(mask, kernel, iterations=2)
-    mask *= 255
 
-    return np.around(mask.mean(), 3), mask
+    return np.around(mask.mean(), 3), mask * 255
 
 
 @app.route("/nature_concentration/", methods=['POST'])
